@@ -14,17 +14,34 @@
     <div class="card">
       <h2 id="welcomeTitle">Enter your name</h2>
       <input id="username" type="text" placeholder="Your name" />
-      <button onclick="startApp()">Start</button>
-      <button class="secondary" onclick="changeName()">Change name</button>
+
+      <button onclick="startApp()">
+        <span>Start Studying</span>
+      </button>
+
+      <button class="secondary" onclick="changeName()">
+        <span>Change name</span>
+      </button>
+
       <div id="welcomeMessage"></div>
     </div>
 
     <!-- NOTIFICATIONS -->
     <div class="card">
       <h2>Roast Notifications 🔔</h2>
-      <button onclick="enableRoastNotifications()">Enable notifications</button>
-      <button class="secondary" onclick="testRoastNow()">Test roast now</button>
-      <p class="small">⚠ Notifications won’t work if you open with file:// (double click). Use Live Server or GitHub Pages.</p>
+
+      <button onclick="enableRoastNotifications()">
+        <span>Enable notifications</span>
+      </button>
+
+      <button class="secondary" onclick="testRoastNow()">
+        <span>Test roast now</span>
+      </button>
+
+      <p class="small">
+        ⚠ Notifications won’t work if you open with file:// (double click).
+        Use Live Server or GitHub Pages.
+      </p>
     </div>
 
     <!-- TIMETABLE -->
@@ -32,7 +49,11 @@
       <h2>Add Exam</h2>
       <input id="subject" type="text" placeholder="Subject (e.g., Maths)" />
       <input id="examDate" type="date" />
-      <button onclick="addExam()">Add Exam</button>
+
+      <button onclick="addExam()">
+        <span>Add Exam</span>
+      </button>
+
       <ul id="examList"></ul>
     </div>
 
@@ -46,7 +67,11 @@
     <!-- ROAST + MEME -->
     <div class="card">
       <h2>Roast Me 😈</h2>
-      <button onclick="roastMe()">Roast</button>
+
+      <button onclick="roastMe()">
+        <span>Roast</span>
+      </button>
+
       <p id="roastText"></p>
       <img id="memeImg" alt="meme" />
     </div>
@@ -56,7 +81,13 @@
       <h2>XP / Level</h2>
       <p id="xpDisplay">XP: 0</p>
       <p id="levelDisplay">Level: Professional Procrastinator</p>
-      <button onclick="addXp()">I studied 25 min ✅</button>
+
+      <button onclick="changeXp(2)"><span>I studied &lt; 10 mins</span></button>
+      <button onclick="changeXp(6)"><span>I studied &lt; 30 mins</span></button>
+      <button onclick="changeXp(10)"><span>I studied &gt; 30 mins</span></button>
+      <button onclick="changeXp(20)"><span>I studied &gt; 1 hour</span></button>
+
+      <button class="secondary" onclick="changeXp(-5)"><span>Decrease XP (-5)</span></button>
     </div>
 
   </div>
