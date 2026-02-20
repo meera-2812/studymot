@@ -182,11 +182,13 @@ button.secondary:hover {
   margin: 10px 0 0;
 }
 
-/* ✅ Make meme image look clean */
 #memeImg{
   width: 100%;
-  max-width: 420px;
-  margin-top: 10px;
+  max-width: 350px;      /* smaller max width */
+  height: 220px;         /* fixed height */
+  object-fit: cover;     /* prevents distortion */
+  margin: 15px auto 0;   /* center it */
   border-radius: 12px;
   display: block;
+  box-shadow: 0 0 20px var(--neon-magenta);
 }
