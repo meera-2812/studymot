@@ -1,35 +1,177 @@
-body { background:#0f0f10; color:#fff; font-family:Arial; }
-.container { max-width: 720px; margin: 40px auto; padding: 0 16px; }
-h1 { text-align:center; margin-bottom: 20px; }
+/* ============================= */
+/* 1. DESIGN TOKENS */
+/* ============================= */
+:root {
+  --bg-void: #090014;
+  --text-main: #E0E0E0;
 
-.card{
-  background:#1c1c1f; border-radius:12px; padding:16px; margin:14px 0;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
-}
-input{
-  padding:10px; margin:6px 0; width: 100%; border-radius:8px; border:none;
-}
-button{
-  padding:10px 14px; margin:6px 6px 0 0; border:none; border-radius:8px;
-  background:#ff2d2d; color:#fff; cursor:pointer;
-}
-button.secondary{ background:#333; }
+  --card-bg: rgba(26, 16, 60, 0.85);
 
-#examList { margin-top: 10px; }
-#examList li { margin: 8px 0; display:flex; justify-content:space-between; gap:10px; }
-.small { font-size: 12px; opacity: 0.8; }
+  --neon-magenta: #FF00FF;
+  --neon-cyan: #00FFFF;
+  --neon-orange: #FF9900;
 
-#countdownPanel.danger{
-  background:#400000 !important;
-  box-shadow: 0 0 18px rgba(255,0,0,0.6);
+  --border-default: #2D1B4E;
+
+  --sunset-gradient: linear-gradient(to right, #FF9900, #FF00FF, #00FFFF);
+}
+
+/* ============================= */
+/* 2. GLOBAL STYLES */
+/* ============================= */
+
+body {
+  margin: 0;
+  background: var(--bg-void);
+  color: var(--text-main);
+  font-family: "Share Tech Mono", monospace;
+  overflow-x: hidden;
+}
+
+/* CRT Scanlines Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18,16,20,0) 50%,
+    rgba(0,0,0,0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ============================= */
+/* 3. LAYOUT */
+/* ============================= */
+
+.container {
+  max-width: 720px;
+  margin: 80px auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-family: "Orbitron", sans-serif;
+  text-align: center;
+  font-size: 42px;
+  background: var(--sunset-gradient);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 40px;
+}
+
+/* ============================= */
+/* 4. CARD SYSTEM */
+/* ============================= */
+
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(6px);
+  border: 2px solid var(--border-default);
+  border-top: 3px solid var(--neon-cyan);
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+  transition: all 0.2s linear;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px var(--neon-magenta);
+}
+
+/* ============================= */
+/* 5. TERMINAL INPUT */
+/* ============================= */
+
+input {
+  width: 100%;
+  background: black;
+  border: none;
+  border-bottom: 2px solid var(--neon-magenta);
+  padding: 12px;
+  color: var(--neon-cyan);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 12px var(--neon-cyan);
+}
+
+/* ============================= */
+/* 6. BUTTON SYSTEM */
+/* ============================= */
+
+button {
+  margin-top: 12px;
+  padding: 12px 18px;
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  font-family: "Share Tech Mono", monospace;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transform: skewX(-12deg);
+  transition: all 0.2s linear;
+}
+
+button span {
+  display: inline-block;
+  transform: skewX(12deg);
+}
+
+button:hover {
+  background: var(--neon-cyan);
+  color: black;
+  transform: skewX(0deg);
+  box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+button.secondary {
+  border-color: var(--neon-magenta);
+  color: var(--neon-magenta);
+}
+
+button.secondary:hover {
+  background: var(--neon-magenta);
+  box-shadow: 0 0 20px var(--neon-magenta);
+}
+
+/* ============================= */
+/* 7. EXAM LIST */
+/* ============================= */
+
+#examList li {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+/* ============================= */
+/* 8. COUNTDOWN DANGER MODE */
+/* ============================= */
+
+#countdownPanel.danger {
+  background: #400000 !important;
+  box-shadow: 0 0 30px red;
   animation: shake 0.25s infinite;
 }
+
 @keyframes shake {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
-  75% { transform: translateX(-2px); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
   100% { transform: translateX(0); }
 }
-
-#memeImg{ width:100%; max-width:420px; margin-top:10px; border-radius:12px; display:block; }
