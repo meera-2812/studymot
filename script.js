@@ -15,6 +15,7 @@ function renderWelcome() {
   const savedName = localStorage.getItem("userName");
   const title = document.getElementById("welcomeTitle");
   const msg = document.getElementById("welcomeMessage");
+  if (!title || !msg) return;
 
   if (savedName) {
     title.textContent = `Welcome back, ${savedName} 😈`;
@@ -29,12 +30,12 @@ function renderWelcome() {
 function addExam() {
   const subject = document.getElementById("subject").value.trim();
   const date = document.getElementById("examDate").value;
-
   if (!subject || !date) return alert("Fill subject + date 😡");
 
   const exams = JSON.parse(localStorage.getItem("exams") || "[]");
   exams.push({ subject, date });
   localStorage.setItem("exams", JSON.stringify(exams));
+
   document.getElementById("subject").value = "";
   document.getElementById("examDate").value = "";
   displayExams();
@@ -49,20 +50,24 @@ function deleteExam(index) {
 
 function displayExams() {
   const ul = document.getElementById("examList");
+  if (!ul) return;
   ul.innerHTML = "";
 
   const exams = JSON.parse(localStorage.getItem("exams") || "[]");
-  exams.sort((a,b) => new Date(a.date) - new Date(b.date));
+  exams.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   const now = new Date();
   exams.forEach((e, idx) => {
     const d = new Date(e.date);
-    const diffDays = Math.ceil((d - now) / (1000*60*60*24));
-    const label = diffDays === 0 ? "Today" : (diffDays < 0 ? "Overdue 💀" : `${diffDays}d left`);
+    const diffDays = Math.ceil((d - now) / (1000 * 60 * 60 * 24));
+    const label =
+      diffDays === 0 ? "Today" : (diffDays < 0 ? "Overdue 💀" : `${diffDays}d left`);
 
     const li = document.createElement("li");
-    li.innerHTML = `<span>${e.subject} — ${e.date} (${label})</span>
-                    <button class="secondary" onclick="deleteExam(${idx})">Delete</button>`;
+    li.innerHTML = `
+      <span>${e.subject} — ${e.date} (${label})</span>
+      <button class="secondary" onclick="deleteExam(${idx})"><span>Delete</span></button>
+    `;
     ul.appendChild(li);
   });
 }
@@ -77,11 +82,14 @@ function startCountdown() {
     const exams = JSON.parse(localStorage.getItem("exams") || "[]");
     const now = new Date();
 
-    const future = exams.filter(e => new Date(e.date) > now).sort((a,b) => new Date(a.date) - new Date(b.date));
+    const future = exams
+      .filter(e => new Date(e.date) > now)
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
 
     const panel = document.getElementById("countdownPanel");
     const timeLeftEl = document.getElementById("timeLeft");
     const dangerText = document.getElementById("dangerText");
+    if (!panel || !timeLeftEl || !dangerText) return;
 
     if (future.length === 0) {
       timeLeftEl.textContent = "No upcoming exams 😎";
@@ -94,9 +102,9 @@ function startCountdown() {
     const target = new Date(next.date);
     const diff = target - now;
 
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff / (1000*60*60)) % 24);
-    const mins = Math.floor((diff / (1000*60)) % 60);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / (1000 * 60)) % 60);
     const secs = Math.floor((diff / 1000) % 60);
 
     timeLeftEl.textContent = `${next.subject}: ${days}d ${hours}h ${mins}m ${secs}s left`;
@@ -135,16 +143,21 @@ function pickRoast() {
 
 function showOfflineMeme() {
   const img = offlineMemes[Math.floor(Math.random() * offlineMemes.length)];
-  document.getElementById("memeImg").src = img;
+  const el = document.getElementById("memeImg");
+  if (el) el.src = img;
 }
 
 function roastMe() {
-  document.getElementById("roastText").textContent = pickRoast();
+  const roastEl = document.getElementById("roastText");
+  if (roastEl) roastEl.textContent = pickRoast();
 
   if (navigator.onLine) {
     fetch("https://meme-api.com/gimme")
       .then(r => r.json())
-      .then(data => { document.getElementById("memeImg").src = data.url; })
+      .then(data => {
+        const imgEl = document.getElementById("memeImg");
+        if (imgEl) imgEl.src = data.url;
+      })
       .catch(() => showOfflineMeme());
   } else {
     showOfflineMeme();
@@ -154,11 +167,10 @@ function roastMe() {
 // ---------- Notifications ----------
 function sendRoastNotification() {
   const msg = pickRoast();
-
   if ("Notification" in window && Notification.permission === "granted") {
     new Notification("Study Or Else 😈", { body: msg });
   } else {
-    alert(msg); // fallback
+    alert(msg);
   }
 }
 
@@ -177,7 +189,6 @@ function enableRoastNotifications() {
 
 function testRoastNow() { sendRoastNotification(); }
 
-// roast when switching tabs
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) sendRoastNotification();
 });
@@ -192,19 +203,27 @@ function levelFromXp(xp) {
 }
 
 function renderXp() {
+  const xpEl = document.getElementById("xpDisplay");
+  const lvlEl = document.getElementById("levelDisplay");
+  if (!xpEl || !lvlEl) return;
+
   const xp = Number(localStorage.getItem("xp") || "0");
-  document.getElementById("xpDisplay").textContent = `XP: ${xp}`;
-  document.getElementById("levelDisplay").textContent = `Level: ${levelFromXp(xp)}`;
+  xpEl.textContent = `XP: ${xp}`;
+  lvlEl.textContent = `Level: ${levelFromXp(xp)}`;
 }
 
-function addXp() {
-  const xp = Number(localStorage.getItem("xp") || "0") + 10;
+function changeXp(delta) {
+  let xp = Number(localStorage.getItem("xp") || "0");
+  xp = xp + delta;
+  if (xp < 0) xp = 0;
   localStorage.setItem("xp", String(xp));
   renderXp();
 }
 
 // ---------- Boot ----------
-renderWelcome();
-displayExams();
-startCountdown();
-renderXp();
+window.addEventListener("load", () => {
+  renderWelcome();
+  if (document.getElementById("examList")) displayExams();
+  if (document.getElementById("countdownPanel")) startCountdown();
+  renderXp();
+});
