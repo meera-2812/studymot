@@ -175,3 +175,18 @@ button.secondary:hover {
   75% { transform: translateX(-3px); }
   100% { transform: translateX(0); }
 }
+/* ✅ Fix exam list bullets + spacing */
+#examList{
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 0;
+}
+
+/* ✅ Make meme image look clean */
+#memeImg{
+  width: 100%;
+  max-width: 420px;
+  margin-top: 10px;
+  border-radius: 12px;
+  display: block;
+}
