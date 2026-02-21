@@ -1,10 +1,5 @@
-<p align="center">
-  <img src="./img.png" alt="Study Or Else Banner" width="100%">
-</p>
+<img width="1280" height="640" alt="image" src="https://github.com/user-attachments/assets/40a0e718-379d-4bf0-8b66-dcc0bdda477a" />
 
-<p align="center">
-  <img src="./Screenshot%202026-02-21%20064228.png" alt="Study Or Else App Screenshot" width="100%">
-</p>
 
 # 📚 Study Or Else 🎯
 
