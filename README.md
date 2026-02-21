@@ -2,6 +2,10 @@
   <img src="./img.png" alt="Study Or Else Banner" width="100%">
 </p>
 
+<p align="center">
+  <img src="./Screenshot%202026-02-21%20064228.png" alt="Study Or Else App Screenshot" width="100%">
+</p>
+
 # 📚 Study Or Else 🎯
 
 ## Basic Details
